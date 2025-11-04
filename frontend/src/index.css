@@ -1,127 +1,146 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&display=swap");
 
 body {
-	margin: 0;
-	font-family: 'Exo 2', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	background: #000;
-	overflow-x: hidden;
+  margin: 0;
+  font-family: "Exo 2", "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #000;
+  overflow-x: hidden;
 }
 
 code {
-	font-family: 'Orbitron', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: "Orbitron", source-code-pro, Menlo, Monaco, Consolas,
+    "Courier New", monospace;
 }
 
 /* Futuristic Dropzone Styling */
 .MuiDropzoneArea-root {
-	background: rgba(255, 255, 255, 0.05) !important;
-	border: 2px dashed rgba(255, 255, 255, 0.3) !important;
-	border-radius: 15px !important;
-	transition: all 0.3s ease !important;
-	min-height: 200px !important;
-	backdrop-filter: blur(10px) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 2px dashed rgba(255, 255, 255, 0.3) !important;
+  border-radius: 15px !important;
+  transition: all 0.3s ease !important;
+  min-height: 200px !important;
+  backdrop-filter: blur(10px) !important;
 }
 
 .MuiDropzoneArea-root:hover {
-	background: rgba(255, 255, 255, 0.1) !important;
-	border-color: rgba(102, 126, 234, 0.8) !important;
-	box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3) !important;
-	transform: scale(1.02) !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(102, 126, 234, 0.8) !important;
+  box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3) !important;
+  transform: scale(1.02) !important;
 }
 
 .MuiDropzoneArea-text {
-	color: rgba(255, 255, 255, 0.9) !important;
-	font-family: 'Exo 2', sans-serif !important;
-	font-weight: 600 !important;
-	font-size: 18px !important;
-	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-family: "Exo 2", sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
 .MuiDropzoneArea-icon {
-	color: rgba(102, 126, 234, 0.8) !important;
-	font-size: 48px !important;
-	filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.4)) !important;
+  color: rgba(102, 126, 234, 0.8) !important;
+  font-size: 48px !important;
+  filter: drop-shadow(0 4px 8px rgba(102, 126, 234, 0.4)) !important;
 }
 
 /* Animated background particles */
 @keyframes float {
-	0%, 100% { transform: translateY(0px) rotate(0deg); }
-	50% { transform: translateY(-20px) rotate(180deg); }
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+  }
 }
 
 @keyframes pulse {
-	0%, 100% { opacity: 0.3; }
-	50% { opacity: 0.8; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-	width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-	background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	border-radius: 4px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
 }
 
 /* Glass morphism effects */
 .glass-effect {
-	background: rgba(255, 255, 255, 0.1);
-	backdrop-filter: blur(20px);
-	border: 1px solid rgba(255, 255, 255, 0.2);
-	border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
 }
 
 /* Neon glow effects */
 .neon-glow {
-	box-shadow: 
-		0 0 20px rgba(102, 126, 234, 0.5),
-		0 0 40px rgba(102, 126, 234, 0.3),
-		0 0 60px rgba(102, 126, 234, 0.1);
+  box-shadow: 0 0 20px rgba(102, 126, 234, 0.5),
+    0 0 40px rgba(102, 126, 234, 0.3), 0 0 60px rgba(102, 126, 234, 0.1);
 }
 
 /* Typography overrides for futuristic look */
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'Orbitron', sans-serif !important;
-	text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Orbitron", sans-serif !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Button animations */
 @keyframes shimmer {
-	0% { background-position: -200% 0; }
-	100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 .shimmer-effect {
-	background: linear-gradient(135deg, #667eea 25%, #764ba2 50%, #667eea 75%);
-	background-size: 200% 100%;
-	animation: shimmer 2s infinite;
+  background: linear-gradient(135deg, #667eea 25%, #764ba2 50%, #667eea 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 
 /* Loading animation enhancement */
 @keyframes spin-glow {
-	0% { 
-		transform: rotate(0deg);
-		filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-	}
-	50% { 
-		filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
-	}
-	100% { 
-		transform: rotate(360deg);
-		filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
-	}
+  0% {
+    transform: rotate(0deg);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.8));
+  }
+  100% {
+    transform: rotate(360deg);
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+  }
 }
 
 .MuiCircularProgress-root {
-	animation: spin-glow 2s linear infinite !important;
+  animation: spin-glow 2s linear infinite !important;
 }
