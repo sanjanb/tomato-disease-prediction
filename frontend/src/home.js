@@ -22,11 +22,11 @@ import {
   CircularProgress,
   Box,
 } from "@material-ui/core";
-import { DropzoneArea } from 'material-ui-dropzone';
-import Clear from '@material-ui/icons/Clear';
-import BugReportIcon from '@material-ui/icons/BugReport';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import axios from 'axios';
+import { DropzoneArea } from "material-ui-dropzone";
+import Clear from "@material-ui/icons/Clear";
+import BugReportIcon from "@material-ui/icons/BugReport";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import axios from "axios";
 
 const GlowButton = withStyles((theme) => ({
   root: {
@@ -47,7 +47,6 @@ const GlowButton = withStyles((theme) => ({
     },
   },
 }))(Button);
-const axios = require("axios").default;
 
 const useStyles = makeStyles((theme) => ({
   grow: {
