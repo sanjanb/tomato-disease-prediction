@@ -1,29 +1,37 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
 import Container from "@material-ui/core/Container";
 import React from "react";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import { Paper, CardActionArea, CardMedia, Grid, TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Button, CircularProgress } from "@material-ui/core";
-import cblogo from "./cblogo.PNG";
-import image from "./bg.png";
+import { Paper, CardActionArea, CardMedia, Grid, TableContainer, Table, TableBody, TableHead, TableRow, TableCell, Button, CircularProgress, Box } from "@material-ui/core";
 import { DropzoneArea } from 'material-ui-dropzone';
-import { common } from '@material-ui/core/colors';
 import Clear from '@material-ui/icons/Clear';
+import BugReportIcon from '@material-ui/icons/BugReport';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 
 
 
-const ColorButton = withStyles((theme) => ({
+const GlowButton = withStyles((theme) => ({
   root: {
-    color: theme.palette.getContrastText(common.white),
-    backgroundColor: common.white,
+    background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%)',
+    border: '2px solid transparent',
+    borderRadius: '25px',
+    color: 'white',
+    fontWeight: 700,
+    fontSize: '16px',
+    textTransform: 'none',
+    padding: '12px 30px',
+    boxShadow: '0 8px 32px rgba(255, 107, 107, 0.4)',
+    transition: 'all 0.3s ease',
     '&:hover': {
-      backgroundColor: '#ffffff7a',
+      background: 'linear-gradient(135deg, #ee5a24 0%, #ff6b6b 100%)',
+      transform: 'translateY(-2px)',
+      boxShadow: '0 12px 40px rgba(255, 107, 107, 0.6)',
     },
   },
 }))(Button);
@@ -35,11 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
   clearButton: {
     width: "-webkit-fill-available",
-    borderRadius: "15px",
+    borderRadius: "25px",
     padding: "15px 22px",
-    color: "#000000a6",
-    fontSize: "20px",
-    fontWeight: 900,
+    fontSize: "18px",
+    fontWeight: 700,
+    textTransform: 'none',
   },
   root: {
     maxWidth: 345,
@@ -47,31 +55,54 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     height: 400,
+    borderRadius: '15px 15px 0 0',
   },
   paper: {
     padding: theme.spacing(2),
     margin: 'auto',
     maxWidth: 500,
+    background: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
   },
   gridContainer: {
     justifyContent: "center",
     padding: "4em 1em 0 1em",
   },
   mainContainer: {
-    backgroundImage: `url(${image})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    height: "93vh",
-    marginTop: "8px",
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+    minHeight: "100vh",
+    position: 'relative',
+    overflow: 'hidden',
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      background: `
+        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%)
+      `,
+      pointerEvents: 'none',
+    },
   },
   imageCard: {
     margin: "auto",
-    maxWidth: 400,
-    height: 500,
-    backgroundColor: 'transparent',
-    boxShadow: '0px 9px 70px 0px rgb(0 0 0 / 30%) !important',
-    borderRadius: '15px',
+    maxWidth: 450,
+    minHeight: 500,
+    background: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: 'blur(20px)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '20px',
+    boxShadow: '0 25px 50px rgba(0, 0, 0, 0.2)',
+    transition: 'all 0.3s ease',
+    '&:hover': {
+      transform: 'translateY(-5px)',
+      boxShadow: '0 35px 70px rgba(0, 0, 0, 0.3)',
+    },
   },
   imageCardEmpty: {
     height: 'auto',
@@ -88,8 +119,11 @@ const useStyles = makeStyles((theme) => ({
     background: 'white',
   },
   tableContainer: {
-    backgroundColor: 'transparent !important',
-    boxShadow: 'none !important',
+    background: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '15px',
+    boxShadow: 'none',
   },
   table: {
     backgroundColor: 'transparent !important',
@@ -101,20 +135,22 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'transparent !important',
   },
   tableCell: {
-    fontSize: '22px',
+    fontSize: '20px',
     backgroundColor: 'transparent !important',
     borderColor: 'transparent !important',
-    color: '#000000a6 !important',
-    fontWeight: 'bolder',
-    padding: '1px 24px 1px 16px',
+    color: '#ffffff !important',
+    fontWeight: 700,
+    padding: '16px 24px',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
   },
   tableCell1: {
-    fontSize: '14px',
+    fontSize: '16px',
     backgroundColor: 'transparent !important',
     borderColor: 'transparent !important',
-    color: '#000000a6 !important',
-    fontWeight: 'bolder',
-    padding: '1px 24px 1px 16px',
+    color: 'rgba(255, 255, 255, 0.8) !important',
+    fontWeight: 600,
+    padding: '12px 24px',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
   },
   tableBody: {
     backgroundColor: 'transparent !important',
@@ -122,26 +158,79 @@ const useStyles = makeStyles((theme) => ({
   text: {
     color: 'white !important',
     textAlign: 'center',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
   },
   buttonGrid: {
-    maxWidth: "416px",
+    maxWidth: "450px",
     width: "100%",
   },
   detail: {
-    backgroundColor: 'white',
+    background: 'rgba(255, 255, 255, 0.05)',
+    backdropFilter: 'blur(10px)',
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
     alignItems: 'center',
+    borderRadius: '0 0 20px 20px',
+    padding: '20px',
   },
   appbar: {
-    background: '#be6a77',
-    boxShadow: 'none',
+    background: 'linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%)',
+    backdropFilter: 'blur(20px)',
+    border: 'none',
+    boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)',
     color: 'white'
   },
+  title: {
+    fontWeight: 700,
+    fontSize: '24px',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+  },
+  subtitle: {
+    fontWeight: 400,
+    fontSize: '16px',
+    opacity: 0.9,
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+  },
   loader: {
-    color: '#be6a77 !important',
-  }
+    color: '#ffffff !important',
+    marginBottom: '16px',
+  },
+  copyright: {
+    position: 'fixed',
+    bottom: '20px',
+    right: '20px',
+    background: 'rgba(0, 0, 0, 0.7)',
+    backdropFilter: 'blur(10px)',
+    color: 'white',
+    padding: '8px 16px',
+    borderRadius: '20px',
+    fontSize: '12px',
+    fontWeight: 500,
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.3)',
+  },
+  processingText: {
+    color: 'white',
+    fontWeight: 600,
+    fontSize: '18px',
+    textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+    marginTop: '12px',
+  },
+  confidenceChip: {
+    background: (confidence) => {
+      if (confidence >= 90) return 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)';
+      if (confidence >= 70) return 'linear-gradient(135deg, #ff9800 0%, #ffc107 100%)';
+      return 'linear-gradient(135deg, #f44336 0%, #e91e63 100%)';
+    },
+    color: 'white',
+    fontWeight: 700,
+    padding: '8px 16px',
+    borderRadius: '20px',
+    fontSize: '16px',
+    boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2)',
+    textShadow: '0 1px 2px rgba(0, 0, 0, 0.3)',
+  },
 }));
 export const ImageUpload = () => {
   const classes = useStyles();
@@ -152,7 +241,7 @@ export const ImageUpload = () => {
   const [isLoading, setIsloading] = useState(false);
   let confidence = 0;
 
-  const sendFile = async () => {
+  const sendFile = useCallback(async () => {
     if (image) {
       let formData = new FormData();
       formData.append("file", selectedFile);
@@ -166,7 +255,7 @@ export const ImageUpload = () => {
       }
       setIsloading(false);
     }
-  }
+  }, [image, selectedFile]);
 
   const clearData = () => {
     setData(null);
@@ -190,7 +279,7 @@ export const ImageUpload = () => {
     }
     setIsloading(true);
     sendFile();
-  }, [preview]);
+  }, [preview, sendFile]);
 
   const onSelectFile = (files) => {
     if (!files || files.length === 0) {
@@ -212,11 +301,18 @@ export const ImageUpload = () => {
     <React.Fragment>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
-            CodeBasics: Potato Disease Classification
-          </Typography>
+          <Box>
+            <Typography className={classes.title} variant="h5" noWrap>
+              🍃 AI Plant Disease Classifier
+            </Typography>
+            <Typography className={classes.subtitle} variant="body2" noWrap>
+              Advanced Neural Network Diagnosis System
+            </Typography>
+          </Box>
           <div className={classes.grow} />
-          <Avatar src={cblogo}></Avatar>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <BugReportIcon sx={{ fontSize: 32, color: '#4caf50' }} />
+          </Box>
         </Toolbar>
       </AppBar>
       <Container maxWidth={false} className={classes.mainContainer} disableGutters={true}>
@@ -226,7 +322,7 @@ export const ImageUpload = () => {
           direction="row"
           justifyContent="center"
           alignItems="center"
-          spacing={2}
+          spacing={3}
         >
           <Grid item xs={12}>
             <Card className={`${classes.imageCard} ${!image ? classes.imageCardEmpty : ''}`}>
@@ -235,24 +331,31 @@ export const ImageUpload = () => {
                   className={classes.media}
                   image={preview}
                   component="image"
-                  title="Contemplative Reptile"
+                  title="Plant Leaf Analysis"
                 />
               </CardActionArea>
               }
               {!image && <CardContent className={classes.content}>
                 <DropzoneArea
                   acceptedFiles={['image/*']}
-                  dropzoneText={"Drag and drop an image of a potato plant leaf to process"}
+                  dropzoneText={"🔬 Drop your plant leaf image here for AI analysis"}
                   onChange={onSelectFile}
+                  showFileNames={true}
+                  maxFileSize={5000000}
+                  filesLimit={1}
+                  dropzoneClass="futuristic-dropzone"
                 />
               </CardContent>}
               {data && <CardContent className={classes.detail}>
+                <Box sx={{ mb: 2 }}>
+                  <CheckCircleIcon sx={{ fontSize: 48, color: '#4caf50', mb: 1 }} />
+                </Box>
                 <TableContainer component={Paper} className={classes.tableContainer}>
-                  <Table className={classes.table} size="small" aria-label="simple table">
+                  <Table className={classes.table} size="small" aria-label="analysis results">
                     <TableHead className={classes.tableHead}>
                       <TableRow className={classes.tableRow}>
-                        <TableCell className={classes.tableCell1}>Label:</TableCell>
-                        <TableCell align="right" className={classes.tableCell1}>Confidence:</TableCell>
+                        <TableCell className={classes.tableCell1}>🔍 Diagnosis:</TableCell>
+                        <TableCell align="right" className={classes.tableCell1}>📊 Confidence:</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody className={classes.tableBody}>
@@ -260,28 +363,47 @@ export const ImageUpload = () => {
                         <TableCell component="th" scope="row" className={classes.tableCell}>
                           {data.class}
                         </TableCell>
-                        <TableCell align="right" className={classes.tableCell}>{confidence}%</TableCell>
+                        <TableCell align="right" className={classes.tableCell}>
+                          <span className={classes.confidenceChip}>
+                            {confidence}%
+                          </span>
+                        </TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
                 </TableContainer>
               </CardContent>}
               {isLoading && <CardContent className={classes.detail}>
-                <CircularProgress color="secondary" className={classes.loader} />
-                <Typography className={classes.title} variant="h6" noWrap>
-                  Processing
+                <CircularProgress size={60} className={classes.loader} />
+                <Typography className={classes.processingText} variant="h6" noWrap>
+                  🧠 AI Processing...
+                </Typography>
+                <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mt: 1 }}>
+                  Analyzing cellular patterns
                 </Typography>
               </CardContent>}
             </Card>
           </Grid>
           {data &&
             <Grid item className={classes.buttonGrid} >
-
-              <ColorButton variant="contained" className={classes.clearButton} color="primary" component="span" size="large" onClick={clearData} startIcon={<Clear fontSize="large" />}>
-                Clear
-              </ColorButton>
+              <GlowButton 
+                variant="contained" 
+                className={classes.clearButton} 
+                color="primary" 
+                component="span" 
+                size="large" 
+                onClick={clearData} 
+                startIcon={<Clear fontSize="large" />}
+              >
+                🔄 Analyze Another Sample
+              </GlowButton>
             </Grid>}
         </Grid >
+        
+        {/* Copyright */}
+        <Box className={classes.copyright}>
+          © 2025 Sanjanb | AI Plant Diagnostics
+        </Box>
       </Container >
     </React.Fragment >
   );
