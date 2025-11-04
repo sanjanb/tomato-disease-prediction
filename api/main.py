@@ -7,6 +7,7 @@ import numpy as np
 from io import BytesIO
 from PIL import Image
 import tensorflow as tf
+import warnings
 
 app = FastAPI()
 
@@ -22,7 +23,24 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-MODEL = tf.keras.models.load_model("../saved_models/1")
+# Load model with custom objects to handle compatibility issues
+def load_model_with_compatibility():
+    try:
+        # Try loading with compile=False to avoid optimizer/loss issues
+        model = tf.keras.models.load_model("../potatoes.h5", compile=False)
+        
+        # Recompile with compatible settings
+        model.compile(
+            optimizer='adam',
+            loss='sparse_categorical_crossentropy',
+            metrics=['accuracy']
+        )
+        return model
+    except Exception as e:
+        print(f"Error loading model: {e}")
+        return None
+
+MODEL = load_model_with_compatibility()
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
@@ -38,6 +56,9 @@ def read_file_as_image(data) -> np.ndarray:
 async def predict(
     file: UploadFile = File(...)
 ):
+    if MODEL is None:
+        return {"error": "Model not loaded properly"}
+    
     image = read_file_as_image(await file.read())
     img_batch = np.expand_dims(image, 0)
     
