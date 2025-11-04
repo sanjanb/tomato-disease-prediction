@@ -1,6 +1,7 @@
 matplotlib
 numpy
 notebook
-tensorflow-addons
+tensorflow>=2.15.0
 tensorflow-model-optimization
-tensorflow==2.5
+Pillow
+scikit-learn
